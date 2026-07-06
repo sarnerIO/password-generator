@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор безопасных паролей онлайн — Сгенерировать надежный пароль бесплатно</title>
+    
+    <meta name="description" content="Бесплатный инструмент для быстрой генерации надежных и устойчивых к взлому паролей онлайн. Настройка длины, регистра, цифр и спецсимволов. Пакетная генерация на стороне клиента.">
+    <meta name="keywords" content="генератор паролей, создать надежный пароль, генерация паролей онлайн, генератор сложных паролей, crypto password generator">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://uuid.sarner.xyz">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://uuid.sarner.xyz">
+    <meta property="og:title" content="Генератор надежных паролей онлайн — Password Generator">
+    <meta property="og:description" content="Удобный инструмент для генерации безопасных и случайных паролей прямо в браузере. Полная конфиденциальность: данные не передаются на сервер.">
+    <meta property="og:image" content="https://uuid.sarner.xyz/assets/og-image.png">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://uuid.sarner.xyz">
+    <meta property="twitter:title" content="Генератор надежных паролей онлайн — Password Generator">
+    <meta property="twitter:description" content="Генерация устойчивых к взлому паролей в один клик. Настройка длины и пула символов. Без отправки данных на сервер.">
+    <meta property="twitter:image" content="https://uuid.sarner.xyz/assets/og-image.png">
+
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="style/style.css">
+</head>
+<body class="bg-[#09090b] text-zinc-100 font-sans min-h-full flex flex-col justify-between antialiased">
+
+    <main class="flex-1 flex items-center justify-center p-4 md:p-8 my-auto">
+        <article class="w-full max-w-5xl bg-[#121214] border border-zinc-800/80 rounded-2xl shadow-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-12">
+            
+            <div class="p-6 md:p-8 lg:col-span-5 border-b lg:border-b-0 lg:border-r border-zinc-800/80 flex flex-col justify-between bg-[#151518]">
+                <div>
+                    <div class="flex items-center gap-3 mb-8">
+                        <div class="w-10 h-10 bg-indigo-500/10 border border-indigo-500/20 rounded-xl flex items-center justify-center text-indigo-400">
+                            <span class="material-icons-round">vpn_key</span>
+                        </div>
+                        <div>
+                            <h1 class="text-lg font-semibold tracking-tight text-white">Password Generator</h1>
+                            <p class="text-xs text-zinc-400">Надежные криптостойкие пароли</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-zinc-400">Длина пароля</label>
+                                <span id="length-val" class="text-xs font-mono font-bold text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">16</span>
+                            </div>
+                            <input type="range" id="password-length" min="4" max="64" value="16" class="w-full accent-indigo-500 h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer" aria-label="Длина пароля">
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-zinc-400">Количество</label>
+                                <span id="quantity-val" class="text-xs font-mono font-bold text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">5</span>
+                            </div>
+                            <input type="range" id="quantity" min="1" max="50" value="5" class="w-full accent-indigo-500 h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer" aria-label="Количество паролей">
+                        </div>
+                        
+                        <div class="space-y-4 pt-2 border-t border-zinc-800/60">
+                            <div class="flex items-center justify-between group cursor-pointer" onclick="toggleSwitch('uppercase')">
+                                <div>
+                                    <span class="text-sm text-zinc-300 group-hover:text-zinc-100 transition-colors block">Прописные буквы</span>
+                                    <span class="text-xs text-zinc-500 block">Включить A-Z</span>
+                                </div>
+                                <button type="button" id="switch-uppercase-btn" class="w-11 h-6 bg-indigo-600 rounded-full p-0.5 transition-colors duration-200 focus:outline-none relative inline-flex items-center" aria-label="Включить прописные буквы">
+                                    <input type="checkbox" id="uppercase" class="sr-only" checked>
+                                    <span id="switch-uppercase-dot" class="w-5 h-5 bg-white rounded-full shadow-md transform duration-200 translate-x-5"></span>
+                                </button>
+                            </div>
+                            
+                            <div class="flex items-center justify-between group cursor-pointer" onclick="toggleSwitch('lowercase')">
+                                <div>
+                                    <span class="text-sm text-zinc-300 group-hover:text-zinc-100 transition-colors block">Строчные буквы</span>
+                                    <span class="text-xs text-zinc-500 block">Включить a-z</span>
+                                </div>
+                                <button type="button" id="switch-lowercase-btn" class="w-11 h-6 bg-indigo-600 rounded-full p-0.5 transition-colors duration-200 focus:outline-none relative inline-flex items-center" aria-label="Включить строчные буквы">
+                                    <input type="checkbox" id="lowercase" class="sr-only" checked>
+                                    <span id="switch-lowercase-dot" class="w-5 h-5 bg-white rounded-full shadow-md transform duration-200 translate-x-5"></span>
+                                </button>
+                            </div>
+                            
+                            <div class="flex items-center justify-between group cursor-pointer" onclick="toggleSwitch('numbers')">
+                                <div>
+                                    <span class="text-sm text-zinc-300 group-hover:text-zinc-100 transition-colors block">Цифры</span>
+                                    <span class="text-xs text-zinc-500 block">Включить 0-9</span>
+                                </div>
+                                <button type="button" id="switch-numbers-btn" class="w-11 h-6 bg-indigo-600 rounded-full p-0.5 transition-colors duration-200 focus:outline-none relative inline-flex items-center" aria-label="Включить цифры">
+                                    <input type="checkbox" id="numbers" class="sr-only" checked>
+                                    <span id="switch-numbers-dot" class="w-5 h-5 bg-white rounded-full shadow-md transform duration-200 translate-x-5"></span>
+                                </button>
+                            </div>
+                            
+                            <div class="flex items-center justify-between group cursor-pointer" onclick="toggleSwitch('symbols')">
+                                <div>
+                                    <span class="text-sm text-zinc-300 group-hover:text-zinc-100 transition-colors block">Специальные символы</span>
+                                    <span class="text-xs text-zinc-500 block">Включить % @ # $ ! *</span>
+                                </div>
+                                <button type="button" id="switch-symbols-btn" class="w-11 h-6 bg-zinc-800 rounded-full p-0.5 transition-colors duration-200 focus:outline-none relative inline-flex items-center" aria-label="Включить специальные символы">
+                                    <input type="checkbox" id="symbols" class="sr-only">
+                                    <span id="switch-symbols-dot" class="w-5 h-5 bg-zinc-400 rounded-full shadow-md transform duration-200 translate-x-0"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button id="btn-generate" class="w-full mt-8 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white font-medium text-sm rounded-xl px-4 py-3.5 flex items-center justify-center gap-2 transition-all shadow-lg shadow-indigo-600/10 cursor-pointer">
+                    <span class="material-icons-round text-base">autorenew</span>
+                    Сгенерировать
+                </button>
+            </div>
+            
+            <div class="p-6 md:p-8 lg:col-span-7 flex flex-col min-h-[400px] lg:min-h-[500px]">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xs font-semibold uppercase tracking-wider text-zinc-400">Результат генерации</h2>
+                    <button id="btn-copy-all" class="text-xs text-zinc-300 hover:text-white flex items-center gap-1.5 bg-zinc-800/60 hover:bg-zinc-800 px-3 py-2 rounded-lg border border-zinc-700/40 transition-all cursor-pointer">
+                        <span class="material-icons-round text-sm">copy_all</span>
+                        <span id="copy-all-text">Скопировать все</span>
+                    </button>
+                </div>
+                
+                <div class="flex-1 bg-[#0c0c0e] border border-zinc-800/80 rounded-xl p-4 font-mono text-xs custom-scrollbar overflow-y-auto max-h-[440px] flex flex-col gap-1.5" id="output-container"></div>
+            </div>
+            
+        </article>
+    </main>
+
+    <footer class="py-4 text-center text-xs text-zinc-600 border-t border-zinc-900 bg-[#09090b]">
+        <p>Разработчик: <span class="text-zinc-400 font-medium hover:text-indigo-400 transition-colors">Sarner</span></p>
+    </footer>
+
+    <script src="app/app.js"></script>
+</body>
+</html>
